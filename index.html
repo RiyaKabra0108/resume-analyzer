@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV Shield - Live ATS Resume Analyzer Workspace</title>
+  <meta name="description" content="Edit your resume in real time, view instant ATS formatting audits, trace skill gaps, monitor interactive score journey logs, and apply Gemini AI rewrites directly to your document.">
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <!-- CDNs for client-side parsing libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- Dashboard Navigation -->
+  <header>
+    <div class="logo-container">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+        </svg>
+      </div>
+      <div class="logo-text">CV Shield</div>
+    </div>
+    
+    <div class="header-actions">
+      <!-- Theme Switcher -->
+      <button id="theme-toggle-btn" class="icon-btn" title="Toggle UI Theme" aria-label="Toggle Theme">
+        <svg id="theme-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+      <button id="reset-app-btn" class="btn btn-secondary" style="display: none;">Reset Workspace</button>
+    </div>
+  </header>
+
+  <!-- Three-Panel Main Workspace Grid -->
+  <main class="workspace-grid">
+    
+    <!-- LEFT PANEL: Upload & Keyword Targets -->
+    <section class="side-panel">
+      
+      <!-- Upload Panel -->
+      <div class="panel-card" id="upload-card">
+        <div class="panel-title">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+          </svg>
+          Import Document
+        </div>
+        
+        <div class="dropzone" id="resume-dropzone">
+          <div class="dropzone-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="12" y1="18" x2="12" y2="12"></line>
+              <line x1="9" y1="15" x2="15" y2="15"></line>
+            </svg>
+          </div>
+          <span style="font-size: 0.8rem; font-weight: 600;">Drag file here or browse</span>
+          <span style="font-size: 0.65rem; color: hsl(var(--text-muted));">PDF, DOCX, TXT</span>
+          <input type="file" id="resume-file-input" class="file-input" accept=".pdf,.docx,.txt">
+        </div>
+
+        <div id="file-info-container" style="display: none;">
+          <div class="file-info-badge">
+            <span id="file-name-label" style="font-weight: 600; font-size: 0.75rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 190px;">resume.pdf</span>
+            <button id="remove-file-btn" class="icon-btn" style="width: 20px; height: 20px; border: none; background: transparent; color: hsl(var(--danger));" title="Clear Document">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Job Description & Keyword Overlay Card -->
+      <div class="panel-card" id="jd-card">
+        <div class="panel-title" style="justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+            Job Target Keywords
+          </div>
+          <!-- Dynamic Match Badge -->
+          <div class="jd-skills-matching-badge" id="jd-skills-badge" style="display: none;">
+            Match: <span id="jd-match-ratio-val">0%</span>
+          </div>
+        </div>
+        
+        <textarea id="jd-textarea-input" class="textarea-input" placeholder="Paste the target job requirements here to map skill gaps and trigger real-time category updates..."></textarea>
+        
+        <!-- Keyword Gaps Grid -->
+        <div id="skills-tags-container" style="display: flex; flex-direction: column; gap: 0.5rem; display: none;">
+          <span style="font-size: 0.75rem; font-weight: 700; color: hsl(var(--text-muted)); text-transform: uppercase;">Keyword Audit:</span>
+          <div class="skills-tags-grid" id="skills-tags-grid">
+            <!-- Matches & Gaps loaded dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Score Journey Timeline Card -->
+      <div class="panel-card" id="timeline-card">
+        <div class="panel-title">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          Score Journey Timeline
+        </div>
+        <div class="panel-subtitle">Logs optimization milestones in real time to trace your progress.</div>
+        <div class="timeline-container" id="timeline-log-container">
+          <!-- Dynamic timeline logs here -->
+        </div>
+      </div>
+      
+    </section>
+
+    <!-- CENTER PANEL: Interactive Live Workspace Document -->
+    <section class="workspace-document-container">
+      
+      <!-- Toolbar Header -->
+      <div class="document-header-toolbar">
+        <div style="display: flex; flex-direction: column; gap: 0.1rem;">
+          <span style="font-size: 0.85rem; font-weight: 700; font-family: var(--font-heading);">Interactive Live Document</span>
+          <span style="font-size: 0.7rem; color: hsl(var(--text-muted));">Changes calculate scores dynamically. Click anywhere to edit.</span>
+        </div>
+        
+        <!-- Live Document Switchable Style Themes -->
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <div class="theme-selector-group" id="theme-selector-group">
+            <button class="btn-theme-select active" data-theme-class="theme-modern">Modern</button>
+            <button class="btn-theme-select" data-theme-class="theme-serif">Serif</button>
+            <button class="btn-theme-select" data-theme-class="theme-navy">Executive</button>
+          </div>
+          
+          <button id="export-pdf-btn" class="btn btn-accent" disabled>
+            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 3v12"/></svg>
+            Export ATS PDF
+          </button>
+        </div>
+      </div>
+
+      <!-- Editable Resume Document Sheet -->
+      <div class="document-card theme-modern" id="document-card-workspace">
+        
+        <!-- Processing feedback block -->
+        <div class="loading-overlay" id="doc-loading-overlay">
+          <div class="loading-spinner"></div>
+          <h4 style="font-family: var(--font-heading); color: #fff;">Optimizing Document Structure...</h4>
+        </div>
+
+        <!-- Editable content wrapper -->
+        <div id="editable-workspace-content" style="display: none; flex-direction: column; gap: 1.25rem;">
+          <!-- Document Header Contact Fields -->
+          <div id="doc-name-field" class="doc-name editor-field" contenteditable="true" placeholder="Enter Full Name">Johnathan Doe</div>
+          <div id="doc-contact-field" class="doc-contact editor-field" contenteditable="true" placeholder="Email | Phone | Address | Github | Linkedin">New York, NY | john.doe@email.com | (123) 456-7890 | github.com/johndoe | linkedin.com/in/johndoe</div>
+          
+          <!-- Summary Block -->
+          <div class="doc-section-header">Professional Summary</div>
+          <div id="doc-summary-field" class="doc-section-body editor-field" contenteditable="true" placeholder="Summarize your professional value, technical competencies, and goals...">Highly motivated Senior Software Engineer with 6+ years of experience building scalable web applications. Expert in React, Node.js, and Cloud Infrastructure. Passionate about automating development pipelines and improving application performance.</div>
+          
+          <!-- Work Experience Bullet points list -->
+          <div class="doc-section-header">Work Experience</div>
+          <div id="experience-intro-field" class="doc-section-body editor-field" contenteditable="true" style="margin-bottom: 0.1rem; font-weight: 600;">Lead Software Engineer | Tech Solutions Inc. | 2022 - Present</div>
+          <ul id="doc-experience-list" class="doc-bullets-list">
+            <!-- Dynamic editable bullet lines -->
+          </ul>
+          <div class="list-action-bar">
+            <button class="btn-list-action" id="add-experience-bullet-btn">+ Add Experience Bullet</button>
+          </div>
+          
+          <!-- Education Block -->
+          <div class="doc-section-header">Education</div>
+          <div id="doc-education-field" class="doc-section-body editor-field" contenteditable="true" placeholder="List degrees, universities, GPA, and graduation dates...">Master of Science in Computer Science | New York University | GPA: 3.8\nBachelor of Science in Software Engineering | State University of New York</div>
+          
+          <!-- Skills Block -->
+          <div class="doc-section-header">Technical Skills</div>
+          <div id="doc-skills-field" class="doc-section-body editor-field" contenteditable="true" placeholder="Categorize your technical skills and keywords...">Frontend: React, TypeScript, JavaScript, HTML5, CSS3, Tailwind CSS\nBackend & DB: Node.js, Express, Go, Python, SQL, PostgreSQL, MongoDB, Redis\nDevOps & Cloud: AWS, Docker, Kubernetes, CI/CD, GitHub Actions, Linux\nProcess & Methods: Agile, Scrum, Jira, Git</div>
+
+          <!-- Projects Block -->
+          <div class="doc-section-header">Projects</div>
+          <ul id="doc-projects-list" class="doc-bullets-list">
+            <!-- Dynamic editable project bullet lines -->
+          </ul>
+          <div class="list-action-bar">
+            <button class="btn-list-action" id="add-project-bullet-btn">+ Add Project Bullet</button>
+          </div>
+        </div>
+
+        <!-- Initial Blank State inside Editor -->
+        <div class="empty-state-workspace" id="editor-empty-state">
+          <svg viewBox="0 0 24 24" width="56" height="56" stroke="currentColor" stroke-width="1.5" fill="none">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <path d="M16 13H8M16 17H8M10 9H8"></path>
+          </svg>
+          <h3 style="font-family: var(--font-heading); font-weight: 700; color: hsl(var(--text-primary)); margin-bottom: 0.15rem;">Workspace Standby</h3>
+          <p style="font-size: 0.8rem; max-width: 380px; color: hsl(var(--text-muted)); margin-bottom: 1.25rem;">Import a resume file via the sidebar, or load our standard template to start writing and refining your content in real time.</p>
+          <button id="load-demo-workspace-btn" class="btn btn-primary">Load Professional Resume Template</button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- RIGHT PANEL: ATS Audits & Warnings -->
+    <section class="side-panel">
+      
+      <!-- Performance Score Dashboard -->
+      <div class="panel-card" id="metrics-card">
+        <div class="panel-title">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 8v4l3 3"></path>
+          </svg>
+          ATS Core Audits
+        </div>
+        
+        <!-- Score circle gauges overlay -->
+        <div class="dashboard-overview-metrics">
+          <div class="metric-circle-overlay">
+            <span class="metric-overlay-num" id="dashboard-overall-score">0</span>
+            <div class="metric-overlay-label">ATS Score</div>
+          </div>
+          <div class="metric-circle-overlay">
+            <span class="metric-overlay-num" id="dashboard-bullets-score">0%</span>
+            <div class="metric-overlay-label">Bullets</div>
+          </div>
+          <div class="metric-circle-overlay">
+            <span class="metric-overlay-num" id="dashboard-skills-score">0%</span>
+            <div class="metric-overlay-label">Skills</div>
+          </div>
+          <div class="metric-circle-overlay">
+            <span class="metric-overlay-num" id="dashboard-formatting-score">0%</span>
+            <div class="metric-overlay-label">Layout</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- High Priority Red Flags warnings with inline Actionable Fixes -->
+      <div class="panel-card" id="warnings-card" style="flex-grow: 1; min-height: 200px;">
+        <div class="panel-title" style="color: hsl(var(--warning));">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          Critical Layout Warnings
+        </div>
+        <div class="scroll-panel-container" id="warnings-list-container">
+          <!-- Warnings loaded dynamically -->
+        </div>
+      </div>
+
+      <!-- Experience Bullet point detailed Auditor -->
+      <div class="panel-card" id="bullets-card" style="flex-grow: 2; min-height: 250px;">
+        <div class="panel-title">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          Bullet Auditor Checklist
+        </div>
+        <div class="panel-subtitle">Audits the strength of individual experience bullets. Click the magic wand for AI suggestions.</div>
+        
+        <div class="scroll-panel-container" id="bullets-checklist-container">
+          <!-- Analyzed bullets loaded dynamically -->
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Secure API Authorization Popup Modal -->
+  <div class="modal-overlay" id="api-key-modal">
+    <div class="modal-card">
+      <h3 style="font-family: var(--font-heading); font-weight: 700; color: hsl(var(--accent-secondary));">API Authorization Required</h3>
+      <p style="font-size: 0.8rem; color: hsl(var(--text-secondary)); line-height: 1.4;">Deep AI STAR bullet rewrites run locally utilizing your own Gemini API Key directly in your browser. Key is never saved to external servers.</p>
+      
+      <div style="display: flex; flex-direction: column; gap: 0.35rem;">
+        <label for="gemini-modal-key-input" style="font-size: 0.75rem; font-weight: 600; color: hsl(var(--text-muted));">Gemini API Key</label>
+        <input type="password" id="gemini-modal-key-input" class="password-input" placeholder="AIzaSy...">
+      </div>
+
+      <div class="modal-actions">
+        <button id="modal-cancel-btn" class="btn btn-secondary">Cancel</button>
+        <button id="modal-save-btn" class="btn btn-primary">Save Key</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>CV Shield &copy; 2026. Premium real-time ATS Live Editor Sandbox. 100% Private Client-Side Parsing.</p>
+  </footer>
+
+  <!-- Coordinator Script Files -->
+  <script src="js/preprocessor.js"></script>
+  <script src="js/analyzer.js"></script>
+  <script src="js/ui.js"></script>
+</body>
+</html>
