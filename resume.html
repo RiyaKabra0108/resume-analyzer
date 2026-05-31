@@ -37,7 +37,7 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      gap: 1.2rem;
+      gap: 1rem;
     }
 
     /* Print toolbar */
@@ -104,7 +104,7 @@
     }
 
     .summary {
-      font-size: 0.85rem;
+      font-size: 0.825rem;
       color: #374151;
       text-align: justify;
       line-height: 1.45;
@@ -119,14 +119,14 @@
       color: #111827;
       border-bottom: 2px solid #111827;
       padding-bottom: 2px;
-      margin-top: 0.5rem;
+      margin-top: 0.35rem;
     }
 
     .skills-grid {
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
-      font-size: 0.85rem;
+      gap: 0.25rem;
+      font-size: 0.825rem;
     }
 
     .skills-row {
@@ -148,8 +148,7 @@
     .project-item {
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
-      margin-bottom: 0.5rem;
+      gap: 0.15rem;
     }
 
     .project-header {
@@ -159,7 +158,7 @@
     }
 
     .project-title {
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       font-weight: 700;
       color: #111827;
     }
@@ -171,7 +170,7 @@
     }
 
     .project-subtitle {
-      font-size: 0.8rem;
+      font-size: 0.775rem;
       font-style: italic;
       color: #4b5563;
     }
@@ -179,18 +178,18 @@
     .project-bullets {
       list-style-type: disc;
       margin-left: 1.25rem;
-      font-size: 0.825rem;
+      font-size: 0.8rem;
       color: #374151;
-      line-height: 1.45;
+      line-height: 1.4;
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: 0.15rem;
     }
 
     .experience-item {
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: 0.15rem;
     }
 
     .experience-header {
@@ -200,23 +199,22 @@
     }
 
     .experience-role {
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       font-weight: 700;
       color: #111827;
     }
 
     .experience-company {
-      font-size: 0.825rem;
+      font-size: 0.8rem;
       font-style: italic;
       color: #4b5563;
-      margin-bottom: 0.15rem;
     }
 
     .education-item {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      font-size: 0.85rem;
+      font-size: 0.825rem;
     }
 
     .education-title {
@@ -232,11 +230,11 @@
     .achievements-list {
       list-style-type: disc;
       margin-left: 1.25rem;
-      font-size: 0.825rem;
+      font-size: 0.8rem;
       color: #374151;
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: 0.15rem;
     }
 
     /* ==========================================
@@ -263,7 +261,7 @@
 
       @page {
         size: A4 portrait;
-        margin: 15mm 15mm 15mm 15mm;
+        margin: 12mm 15mm 12mm 15mm;
       }
     }
   </style>
@@ -297,28 +295,28 @@
 
     <!-- Professional Summary -->
     <p class="summary">
-      Results-driven Computer Science undergraduate specializing in AI tools development, clean full-stack web platforms, and browser extension architectures. Adept at building production-ready, client-side web sandboxes, automating data workflows, and executing low-latency API integrations in competitive developer environments.
+      Results-driven Computer Science undergraduate specializing in AI, backend development, and high-frequency systems. Proven track record of architecting full-stack platforms, autonomous agents, and collaborative Chrome extensions. Adept at delivering scalable, production-ready solutions in highly competitive developer environments.
     </p>
 
     <!-- Technical Skills -->
     <section>
       <h2 class="section-header">Technical Skills</h2>
-      <div class="skills-grid" style="margin-top: 0.4rem;">
+      <div class="skills-grid" style="margin-top: 0.3rem;">
         <div class="skills-row">
           <span class="skills-label">Languages:</span>
-          <span class="skills-value">Python, JavaScript (ES6+), HTML5, CSS3, SQL</span>
+          <span class="skills-value">Java, C++, Python (Advanced), SQL, JavaScript</span>
         </div>
         <div class="skills-row">
-          <span class="skills-label">AI & Web Frameworks:</span>
-          <span class="skills-value">Gemini API (REST/JSON), Node.js, Express, FastAPI</span>
+          <span class="skills-label">AI & ML:</span>
+          <span class="skills-value">XGBoost, Scikit-learn, PyTorch, Gemini API (REST/JSON)</span>
         </div>
         <div class="skills-row">
-          <span class="skills-label">Web & Databases:</span>
-          <span class="skills-value">React, Tailwind CSS, Supabase, PostgreSQL, MongoDB, Redis</span>
+          <span class="skills-label">Web & Data:</span>
+          <span class="skills-value">Node.js, React, Tailwind CSS, Supabase, PostgreSQL, MongoDB, Redis</span>
         </div>
         <div class="skills-row">
-          <span class="skills-label">Tools & Methods:</span>
-          <span class="skills-value">Docker, Git, GitHub Actions, PDF.js, Mammoth.js, Data Analysis</span>
+          <span class="skills-label">Tools & DevOps:</span>
+          <span class="skills-value">Docker, Git, Chrome Extension API (Manifest V3), PDF.js, Mammoth.js</span>
         </div>
       </div>
     </section>
@@ -326,21 +324,62 @@
     <!-- Selected Projects -->
     <section>
       <h2 class="section-header">Selected Projects</h2>
-      <div style="margin-top: 0.4rem; display: flex; flex-direction: column; gap: 0.75rem;">
+      <div style="margin-top: 0.3rem; display: flex; flex-direction: column; gap: 0.6rem;">
         
+        <!-- Force Copy Paste Extension -->
+        <div class="project-item">
+          <div class="project-header">
+            <span class="project-title">Force Copy Paste Extension</span>
+            <span class="project-date">2026</span>
+          </div>
+          <span class="project-subtitle">Advanced Web Accessibility & Anti-Copy Bypass Tool (Collaborative: bindan-gooli/force-copy-paste-extension-for-browser)</span>
+          <ul class="project-bullets">
+            <li>Engineered a Google Chrome extension using Manifest V3, successfully bypassing strict anti-copy and right-click restrictions on modern websites.</li>
+            <li>Implemented DOM event interception at the window capture phase, neutralizing anti-copy JavaScript before execution.</li>
+            <li>Designed a dynamic CSS injection system to actively traverse the DOM and strip inline user-select: none restrictions in real-time.</li>
+            <li>Published an open-source repository featuring a responsive popup UI built with glassmorphism styling and Chrome Local Storage.</li>
+          </ul>
+        </div>
+
+        <!-- THE SAVIOUR -->
+        <div class="project-item">
+          <div class="project-header">
+            <span class="project-title">THE SAVIOUR (AI Study Assistant)</span>
+            <span class="project-date">2026</span>
+          </div>
+          <span class="project-subtitle">Full-Stack Multimodal AI Application (Collaborative: bindan-gooli/THE-SAVIOUR)</span>
+          <ul class="project-bullets">
+            <li>Architected a multimodal AI platform utilizing FastAPI to dynamically generate interactive mock vivas and MCQs from unstructured text, PDFs, and images.</li>
+            <li>Engineered a real-time voice examiner integrating the Web Speech API; evaluated user responses with low latency while autonomously tracking weak topics.</li>
+          </ul>
+        </div>
+
+        <!-- Crypto Guard -->
+        <div class="project-item">
+          <div class="project-header">
+            <span class="project-title">Crypto Guard: Hybrid Fraud Detection & Ultra-Scalper</span>
+            <span class="project-date">2024 – Present</span>
+          </div>
+          <span class="project-subtitle">Advanced AI Trading & Security Suite (Collaborative: bindan-gooli/crypto-stock-fraud-detector)</span>
+          <ul class="project-bullets">
+            <li>Engineered an autonomous high-frequency crypto scalping bot using the Binance API, executing profitable trades via a "Wait & Confirm" strategy.</li>
+            <li>Developed a hybrid Isolation Forest and XGBoost fraud detection pipeline, visualizing transaction anomalies through an interactive Streamlit dashboard.</li>
+            <li>Optimized and trained Scikit-learn algorithms on a dataset of 10M+ transactional data points, achieving >99% accuracy and high AUC in fraud classification.</li>
+          </ul>
+        </div>
+
         <!-- CV Shield -->
         <div class="project-item">
           <div class="project-header">
             <span class="project-title">CV Shield (AI-Powered Resume Workspace)</span>
             <span class="project-date">2026</span>
           </div>
-          <span class="project-subtitle">Interactive Real-time ATS Resume Editor Sandbox</span>
+          <span class="project-subtitle">Interactive Real-time ATS Resume Editor Sandbox (Owned: RiyaKabra0108/resume-analyzer)</span>
           <ul class="project-bullets">
-            <li>Architected a responsive client-side resume builder and ATS optimizer featuring debounced reactive calculation updates (600ms latency buffer) to compile overall scores and warnings.</li>
+            <li>Architected a responsive client-side resume builder and ATS optimizer featuring debounced reactive calculation updates to compile overall scores and warnings.</li>
             <li>Engineered a custom Score Journey timeline logging state modifications dynamically and plotting visual score indicators.</li>
             <li>Implemented actionable warnings with inline event triggers that instantly auto-focus cursor selections or inject placeholders.</li>
-            <li>Integrated Gemini API client utilizing secure session storage authorization tokens and returning structured STAR rewrites.</li>
-            <li>Designed a native `@media print` CSS engine formatting the resume card into a standard parsable black-and-white single-column template, stripping out UI buttons and sidebars.</li>
+            <li>Integrated Gemini API client utilizing secure session storage authorization tokens and returning structured STAR-method bullet point rewrites.</li>
           </ul>
         </div>
 
@@ -350,24 +389,10 @@
             <span class="project-title">AgroVision</span>
             <span class="project-date">2025</span>
           </div>
-          <span class="project-subtitle">Agricultural Data Vision & Soil Analytics Suite</span>
+          <span class="project-subtitle">Agricultural Data Vision & Soil Analytics Suite (Owned: RiyaKabra0108/AgroVision)</span>
           <ul class="project-bullets">
-            <li>Engineered an agricultural data vision dashboard using Python to evaluate crop properties and classify soil health.</li>
-            <li>Implemented Scikit-learn classification algorithms on transactional agricultural datasets to optimize resource allocations.</li>
-            <li>Developed an interactive Streamlit UI visualizing anomaly trends and farm metric records.</li>
-          </ul>
-        </div>
-
-        <!-- Hype2 -->
-        <div class="project-item">
-          <div class="project-header">
-            <span class="project-title">Hype2</span>
-            <span class="project-date">2025</span>
-          </div>
-          <span class="project-subtitle">Intelligent Event Management & Automation Hub</span>
-          <ul class="project-bullets">
-            <li>Designed a high-throughput event hub utilizing Node.js and PostgreSQL to schedule triggers and coordinate transactional processes.</li>
-            <li>Integrated scalable backend webhooks handling concurrent user requests with low system latency.</li>
+            <li>Engineered an agricultural data vision dashboard in Python utilizing Scikit-learn to classify soil properties and analyze crop health.</li>
+            <li>Developed an interactive Streamlit anomaly tracker to visualize regional farm health metric records in real-time.</li>
           </ul>
         </div>
 
@@ -377,16 +402,16 @@
     <!-- Experience -->
     <section>
       <h2 class="section-header">Experience</h2>
-      <div style="margin-top: 0.4rem; display: flex; flex-direction: column; gap: 0.5rem;">
+      <div style="margin-top: 0.3rem; display: flex; flex-direction: column; gap: 0.4rem;">
         <div class="experience-item">
           <div class="experience-header">
-            <span class="experience-role">Technical Solutions Developer & Contributor</span>
-            <span class="project-date">Aug 2024 – Present</span>
+            <span class="experience-role">Technical Collaborator & Contributor</span>
+            <span class="project-date">Aug 2024 – Dec 2025</span>
           </div>
           <span class="experience-company">Open-Source Technical Projects</span>
           <ul class="project-bullets">
-            <li>Collaborated with global developer networks to design and publish highly reusable Javascript libraries and preprocessor components.</li>
-            <li>Architected zero-setup browser tools presented to technical communities, optimizing formatting audits.</li>
+            <li>Co-authored codebase components for high-frequency trading simulations and chrome browser automation tools.</li>
+            <li>Collaborated with cross-functional developer networks to deliver optimized frontend states and low-latency API handlers.</li>
           </ul>
         </div>
       </div>
@@ -395,10 +420,10 @@
     <!-- Education -->
     <section>
       <h2 class="section-header">Education</h2>
-      <div class="education-item" style="margin-top: 0.4rem;">
+      <div class="education-item" style="margin-top: 0.3rem;">
         <div>
           <span class="education-title">Bachelor of Technology in Computer Science and Engineering</span><br>
-          <span style="font-size: 0.8rem; color: #4b5563;">Bennett University, Greater Noida</span>
+          <span style="font-size: 0.775rem; color: #4b5563;">Bennett University, Greater Noida</span>
         </div>
         <span class="education-date">Expected Dec 2028</span>
       </div>
@@ -407,10 +432,10 @@
     <!-- Achievements -->
     <section>
       <h2 class="section-header">Achievements</h2>
-      <ul class="achievements-list" style="margin-top: 0.4rem;">
-        <li>**Developer Excellence:** Ranked Top 10 at regional Hackathons, demonstrating high-speed prototype building skills under tight constraints.</li>
-        <li>**Academics:** Recipient of academic scholarships for consistent top performance in computer science modules.</li>
-        <li>**Technical Certifications:** Completed Advanced Web Development and Cloud Architectures paths from leading academic portals.</li>
+      <ul class="achievements-list" style="margin-top: 0.3rem;">
+        <li>**HackAccino 4.0:** Secured Rank 9 among 1,000+ national-level participants in prototype speed runs.</li>
+        <li>**Academic Scholarship:** Recipient of Bennett University scholarship for academic excellence.</li>
+        <li>**Certifications:** Completed Advanced AI and Web Architectures specializations from NPTEL & Coursera.</li>
       </ul>
     </section>
 
